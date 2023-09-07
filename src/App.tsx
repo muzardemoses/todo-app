@@ -1,14 +1,14 @@
-import './App.css'
-import { Haeder } from './Components'
+import { Haeder, SectionOne, SectionTwo } from './Components'
 
 function App() {
 
   return (
     <div className='min-h-screen flex flex-col gap-12'>
       <Haeder />
-      <div>
-
-      </div>
+      <main className='px-16 flex flex-col gap-8'>
+        <SectionOne />
+        <SectionTwo />
+      </main>
     </div>
   )
 }
