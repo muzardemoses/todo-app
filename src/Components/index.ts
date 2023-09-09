@@ -1,3 +1,7 @@
 export * from "./Header"
 export * from "./SectionOne"
 export * from "./SectionTwo"
+export * from "./TaskContainer"
+export * from "./RightContainer"
+export * from "./TaskHeader"
+export * from "./TaskFooter"
