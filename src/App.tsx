@@ -1,13 +1,33 @@
+import { SetStateAction, useState } from 'react'
 import { Haeder, SectionOne, SectionTwo } from './Components'
 
 function App() {
+  const [todos, setTodos] = useState([])
+  const [currentPage, setCurrentPage] = useState(1);
+  const [todosPerPage] = useState(6); // Number of todos to display per page
+
+
+  // Calculate the total number of pages based on the number of todos per page
+  const totalPages = Math.ceil(todos.length / todosPerPage);
+
+  // Function to handle pagination when a page number is clicked
+  const handlePageChange = (pageNumber: SetStateAction<number>) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // Calculate the start and end indices for the current page
+  const startIndex = (currentPage - 1) * todosPerPage;
+  const endIndex = startIndex + todosPerPage;
+
+  // Get the todos for the current page
+  const currentTodos = todos.slice(startIndex, endIndex);
 
   return (
-    <div className='min-h-screen flex flex-col gap-12'>
+    <div className='min-h-screen pb-24 flex flex-col gap-12'>
       <Haeder />
       <main className='px-16 flex flex-col gap-8'>
         <SectionOne />
-        <SectionTwo />
+        <SectionTwo todos={todos} setTodos={setTodos} currentTodos={currentTodos} totalPages={totalPages} handlePageChange={handlePageChange} currentPage={currentPage} />
       </main>
     </div>
   )
