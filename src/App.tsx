@@ -4,7 +4,7 @@ import { Haeder, SectionOne, SectionTwo } from './Components'
 function App() {
   const [todos, setTodos] = useState([])
 
-  const [task, setTask] = useState({todos: []});
+  const [task, setTask] = useState({ todos: [] });
 
   const [currentContainer, setCurrentContainer] = useState("calendar");
 

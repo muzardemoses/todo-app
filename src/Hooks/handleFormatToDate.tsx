@@ -9,6 +9,8 @@ export const handleFormatToDate = (date: moment.MomentInput) => {
 
     if (date === today) {
         return 'Today';
+    } else if (date === moment().subtract(1, 'day').format('YYYY-MM-DD')) {
+        return 'Yesterday';
     } else if (date === tomorrow) {
         return 'Tomorrow';
         // } else if (moment(date).isAfter(nextWeek)) {
