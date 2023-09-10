@@ -1,3 +1,5 @@
+import {  addDays } from 'date-fns';
+
 export const TaskHeader = () => {
     // Get the current date
     const currentDate = new Date();
@@ -7,37 +9,39 @@ export const TaskHeader = () => {
     const currentYear = currentDate.getFullYear();
 
     // Create an array to hold the days of the week
-    const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     // Calculate the start date (Monday of the current week)
-    const startDate = new Date(currentYear, currentMonth, currentDay - currentDate.getDay() + 1);
+    const startDate = addDays(currentDate, -currentDate.getDay() + 1);
 
     // Create an array to hold the 11 days starting from Monday
     const datesToShow = Array.from({ length: 11 }, (_, index) => {
-        const date = new Date(startDate);
-        date.setDate(startDate.getDate() + index);
+        const date = addDays(startDate, index);
         return date.getDate();
     });
 
+    // Add the current day to the datesToShow if it's not already there
+    if (!datesToShow.includes(currentDay)) {
+        datesToShow.push(currentDay);
+    }
+
+    // Sort the datesToShow array to ensure it's in ascending order
+    datesToShow.sort((a, b) => a - b);
+
     return (
-        <div className="flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-4">
             <h4 className="text-gray-900 font-semibold text-base">
                 {currentMonthText} {currentYear}
             </h4>
-            <div className="flex gap-4">
-                {datesToShow.map(day => (
+            <div className="w-full flex gap-4">
+                {datesToShow.map((day) => (
                     <div
                         key={day}
-                        className={`w-max border border-gray-700 rounded-lg px-4 py-2.5 flex flex-col gap-2 items-center text-gray-700 text-sm font-semibold ${
-                            day === currentDay ? 'bg-[#3F5BF6] text-[#ffff] border-[#3F5BF6]' : ''
-                        }`}
+                        className={`flex-1 border border-gray-700 rounded-lg px-4 py-2.5 flex flex-col gap-2 items-center text-gray-700 text-sm font-semibold ${day === currentDay ? 'bg-[#3F5BF6] text-[#ffff] border-[#3F5BF6]' : ''
+                            }`}
                     >
-                        <p>
-                            {daysOfWeek[(startDate.getDay() + day - 1) % 7]}
-                        </p>
-                        <p>
-                            {day}
-                        </p>
+                        <p>{daysOfWeek[new Date(currentDate.getFullYear(), currentMonth, day).getDay()]}</p>
+                        <p>{day}</p>
                     </div>
                 ))}
             </div>

@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TaskContainer, RightContainer } from "."
 
-export const SectionTwo = ({ todos, setTodos, currentTodos, totalPages, handlePageChange, currentPage  }: { todos: any, setTodos: any, currentTodos: any , totalPages: any, handlePageChange: any, currentPage: any}) => {
-    
+export const SectionTwo = ({ todos, setTodos, currentTodos, totalPages, handlePageChange, currentPage, currentContainer, setCurrentContainer, task, setTask }: { todos: any, setTodos: any, currentTodos: any, totalPages: any, handlePageChange: any, currentPage: any, currentContainer: any, setCurrentContainer: any, task: any, setTask: any }) => {
+
     return (
-        <div className="h-full flex gap-6 justify-between">
-            <div>
-                <TaskContainer todos={todos} setTodos={setTodos} currentTodos={currentTodos} totalPages={totalPages} handlePageChange={handlePageChange} currentPage={currentPage} />
+        <div className="w-full h-full flex gap-5">
+            <div className="w-full">
+                <TaskContainer todos={todos} setTodos={setTodos} currentTodos={currentTodos} totalPages={totalPages} handlePageChange={handlePageChange} currentPage={currentPage} currentContainer={currentContainer}  setCurrentContainer={setCurrentContainer} task={task} setTask={setTask} />
             </div>
-            <div className="flex shrink-0 self-stretch pl-6 border-l border-[#EAECF0]">
-                <RightContainer />
+            <div className="w-[418px] pl-6 flex shrink-0 self-stretch border-l border-[#EAECF0]">
+                <RightContainer todos={todos} setTodos={setTodos} currentContainer={currentContainer} setCurrentContainer={setCurrentContainer} task={task} setTask={setTask} />
             </div>
         </div>
     )

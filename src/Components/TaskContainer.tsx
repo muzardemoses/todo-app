@@ -3,10 +3,11 @@ import { TaskFooter, TaskHeader } from "."
 import { useEffect } from "react"
 import axios from 'axios';
 import moment from 'moment';
+import { handleFormatToDate } from "../Hooks";
 import checkSVG from "../assets/check.svg"
 
 
-export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handlePageChange, currentPage  }: { todos: any, setTodos: any, currentTodos: any , totalPages: any, handlePageChange: any, currentPage: any}) => {
+export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handlePageChange, currentPage, currentContainer, setCurrentContainer, task, setTask }: { todos: any, setTodos: any, currentTodos: any, totalPages: any, handlePageChange: any, currentPage: any, currentContainer: any, setCurrentContainer: any, task: any, setTask: any }) => {
 
     useEffect(() => {
         // Fetch todos from the JSONPlaceholder API
@@ -44,7 +45,12 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
                     return timeA.diff(timeB);
                 });
 
-                setTodos(todosWithDates);
+                const capitalizedTitles = todosWithDates.map((todo: { title: string; }) => ({
+                    ...todo,
+                    title: todo.title.charAt(0).toUpperCase() + todo.title.slice(1),
+                }));
+
+                setTodos(capitalizedTitles);
             })
             .catch((error) => {
                 console.error('Error fetching todos:', error);
@@ -75,24 +81,6 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
         return durationString;
     };
 
-    const formatTodoDate = (date: moment.MomentInput) => {
-        const today = moment().format('YYYY-MM-DD');
-        const tomorrow = moment().add(1, 'day').format('YYYY-MM-DD');
-        //const nextWeek = moment().add(7, 'days').format('YYYY-MM-DD');
-
-        const formattedDate = moment(date).format('D MMM YYYY');
-
-        if (date === today) {
-            return 'Today';
-        } else if (date === tomorrow) {
-            return 'Tomorrow';
-            // } else if (moment(date).isAfter(nextWeek)) {
-            //     return 'Next week';
-        } else {
-            return formattedDate;
-        }
-    };
-
     // Function to set todo.completed to true
     const markTodoComplete = (todoId: any) => {
         const updatedTodos = todos.map((todo: { id: any; }) => {
@@ -117,7 +105,7 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
 
 
     return (
-        <div className="flex flex-col gap-8">
+        <div className="w-full flex flex-col gap-8">
             <TaskHeader />
             <main className="flex flex-col gap-4">
                 <h4 className="text-gray-900 font-semibold text-base">
@@ -125,9 +113,22 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
                 </h4>
                 <ul className="flex flex-col gap-4">
                     {currentTodos.map((todo: any) => (
-                        <li key={todo.id} className="bg-gray-50 w-full h-[72px] py-4 px-6 flex justify-between items-center border-b border-gray-200">
-                            <div className="flex items-center gap-3">
-                                <button className={`h-5 w-5 flex justify-center items-center border border-gray-300 bg-white rounded-md hover:border-gray-400 hover:bg-gray-100 ${todo.completed ? "border-[#3F5BF6]" : ""}`}
+                        <li
+                            key={todo.id}
+                            className={`bg-gray-50 w-full h-[72px] py-4 px-6 flex justify-between items-center border-b border-gray-200 hover:bg-gray-100 hover:cursor-pointer transition duration-500 ease-in-out ${task && (task.id === todo.id) && (currentContainer === 'view-task' || currentContainer === 'edit-task')
+                                ? 'bg-[#EAEDFE]'
+                                : ''}
+                          `}
+                            onClick={() => {
+                                setTask(todo);
+                                setCurrentContainer('view-task');
+                            }}
+                        >
+                            <div className="flex items-center gap-3"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <button
+                                    className={`h-5 w-5 flex justify-center items-center border border-gray-300 bg-white rounded-md hover:border-gray-400 hover:bg-gray-100 ${todo.completed ? "border-[#3F5BF6]" : ""}`}
                                     onClick={() => {
                                         if (todo.completed) {
                                             markTodoIncomplete(todo.id);
@@ -144,17 +145,23 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
                                         />
                                     )}
                                 </button>
-                                <div className="flex flex-col gap-1">
-                                    <h5 className={`text-gray-900 text-sm font-semibold ${todo.completed ? "text-[#D0D5DD] font-medium line-through" : ""}`}>
+                                <div
+                                    className="flex flex-col gap-1"
+                                    onClick={() => {
+                                        setTask(todo);
+                                        setCurrentContainer('view-task');
+                                    }}
+                                >
+                                    <h5 className={`text-gray-900 text-sm font-semibold transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] font-medium line-through" : ""}`}>
                                         {todo.title}
                                     </h5>
-                                    <p className={`text-gray-600 text-sm font-normal ${todo.completed ? "text-[#D0D5DD] line-through" : ""}`}>
+                                    <p className={`text-gray-600 text-sm font-normal transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] line-through" : ""}`}>
                                         {todo.duration}
                                     </p>
                                 </div>
                             </div>
                             <p className="text-gray-600 font-normal text-sm">
-                                {formatTodoDate(todo.date)}
+                                {handleFormatToDate(todo.date)}
                             </p>
                         </li>
                     ))}

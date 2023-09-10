@@ -3,6 +3,11 @@ import { Haeder, SectionOne, SectionTwo } from './Components'
 
 function App() {
   const [todos, setTodos] = useState([])
+
+  const [task, setTask] = useState({todos: []});
+
+  const [currentContainer, setCurrentContainer] = useState("calendar");
+
   const [currentPage, setCurrentPage] = useState(1);
   const [todosPerPage] = useState(6); // Number of todos to display per page
 
@@ -26,8 +31,8 @@ function App() {
     <div className='min-h-screen pb-24 flex flex-col gap-12'>
       <Haeder />
       <main className='px-16 flex flex-col gap-8'>
-        <SectionOne />
-        <SectionTwo todos={todos} setTodos={setTodos} currentTodos={currentTodos} totalPages={totalPages} handlePageChange={handlePageChange} currentPage={currentPage} />
+        <SectionOne setCurrentContainer={setCurrentContainer} />
+        <SectionTwo todos={todos} setTodos={setTodos} currentTodos={currentTodos} totalPages={totalPages} handlePageChange={handlePageChange} currentPage={currentPage} currentContainer={currentContainer} setCurrentContainer={setCurrentContainer} task={task} setTask={setTask} />
       </main>
     </div>
   )

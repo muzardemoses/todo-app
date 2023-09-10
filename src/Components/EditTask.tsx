@@ -1,0 +1,121 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect } from "react"
+import { handleFormatToDate } from "../Hooks";
+import closeSVG from '../assets/close.svg';
+import calenderGraySVG from '../assets/calendar-gray.svg';
+import clockGraySVG from '../assets/clock-gray.svg';
+import bellSvg from '../assets/bell-03.svg';
+
+
+export const EditTask = ({ todos, setTodos, setCurrentContainer, task, setTask }: { todos: any, setTodos: any, setCurrentContainer: any, task: any, setTask: any }) => {
+    const [title, setTitle] = useState('');
+    const [date, setDate] = useState('');
+    const [startTime, setStartTime] = useState('');
+    const [endTime, setEndTime] = useState('');
+
+    useEffect(() => {
+        setTitle(task.title);
+        setDate(task.date);
+        const [startTime, endTime] = task.duration.split(' - ');
+        setStartTime(startTime);
+        setEndTime(endTime);
+    }, [task]);
+
+    const [showNotification, setShowNotification] = useState(true);
+
+    const splitTime = (duration: string) => {
+        const [startTime, endTime] = duration.split(' - ');
+        return { startTime, endTime };
+    }
+
+    const handleSaveEdit = () => {
+        const updatedTodos = todos.map((todo: any) => {
+            if (todo.id === task.id) {
+                return {
+                    ...todo,
+                    title: title ? title : todo.title,
+                    date: date ? date : todo.date,
+                    duration: `${startTime ? startTime : splitTime(todo.duration).startTime} - ${endTime ? endTime : splitTime(todo.duration).endTime}`,
+                };
+            }
+            return todo;
+        });
+
+        const updatedTask = updatedTodos.find((todo: any) => todo.id === task.id);
+        setTask(updatedTask);
+        setTodos(updatedTodos);
+        setCurrentContainer('view-task');
+    };
+
+    return (
+        <div className="w-full p-6 flex flex-col gap-8 border border-gray-100 rounded-lg shadow-xl">
+            <div className='flex flex-col gap-4'>
+                <div className='flex justify-between items-center'>
+                    <h5 className="text-gray-900 font-semibold text-lg">
+                        Edit Task
+                    </h5>
+                    <button
+                        className="w-6 h-6"
+                        onClick={() => setCurrentContainer('view-task')}>
+                        <img src={closeSVG} alt="close" />
+                    </button>
+                </div>
+                <textarea
+                    value={title}
+                    className='w-full h-[140px] resize-none bg-gray-50 text-gray-500 font-normal text-base border border-gray-300 rounded-lg shadow-sm py-3 px-3.5 focus:outline-none focus:ring-2 focus:ring-blue-50 transition duration-500 ease-in-out'
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+                <div className='flex justify-between items-center'>
+                    <button className='py-2.5 px-2 flex gap-2 items-center border border-gray-300 rounded-lg shadow-sm'>
+                        <img src={calenderGraySVG} alt="calendar" className='w-5 h-5' />
+                        <p className='text-gray-500 text-sm font-semibold'>
+                            {handleFormatToDate(task.date).slice(0, 6)}
+                        </p>
+                    </button>
+                    <div className="flex gap-4">
+                        <button className='py-2.5 px-2 flex gap-2 items-center border border-gray-300 rounded-lg shadow-sm'>
+                            <img src={clockGraySVG} alt="clock" className='w-5 h-5' />
+                            <p className='text-gray-500 text-sm font-semibold'>
+                                {splitTime(task.duration).startTime.toLowerCase()}
+                            </p>
+                        </button>
+                        <button className='py-2.5 px-2 flex gap-2 items-center border border-gray-300 rounded-lg shadow-sm'>
+                            <img src={clockGraySVG} alt="clock" className='w-5 h-5' />
+                            <p className='text-gray-500 text-sm font-semibold'>
+                                {splitTime(task.duration).endTime.toLowerCase()}
+                            </p>
+                        </button>
+                    </div>
+                </div>
+                {showNotification && (
+                    <div className='flex justify-between items-center'>
+                        <div className="flex gap-2 items-center">
+                            <img src={bellSvg} alt="bell" className='w-4 h-4' />
+                            <p className='text-[#667085] text-base font-medium font-["Inter"]'>
+                                10 minutes before
+                            </p>
+                        </div>
+                        <button onClick={() => setShowNotification(false)}>
+                            <img src={closeSVG} alt="close" className='w-4 h-4' />
+                        </button>
+                    </div>
+                )}
+            </div>
+            <div className='flex gap-3'>
+                <button
+                    className='w-[164px] py-2.5 border border-gray-300 rounded-lg 
+                    shadow-sm hover:bg-gray-50 transition duration-500 ease-in-out'
+                    onClick={() => setCurrentContainer('view-task')}
+                >
+                    Cancel
+                </button>
+                <button
+                    className='w-[164px] py-2.5 bg-[#3F5BF6] border border-[#3F5BF6] rounded-lg shadow-sm text-white hover:bg-blue-700 hover:border-blue-700 transition duration-500 ease-in-out'
+                    onClick={handleSaveEdit}
+                >
+                    Save
+                </button>
+            </div>
+        </div>
+    )
+}
