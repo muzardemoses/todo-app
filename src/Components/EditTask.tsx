@@ -23,6 +23,8 @@ export const EditTask = ({ todos, setTodos, setCurrentContainer, task, setTask }
     const [showStartTimePicker, setShowStartTimePicker] = useState(false);
     const [showEndTimePicker, setShowEndTimePicker] = useState(false);
 
+    const [showNotification, setShowNotification] = useState(true);
+
     useEffect(() => {
         setTitle(task.title);
         setDate(task.date);
@@ -31,14 +33,15 @@ export const EditTask = ({ todos, setTodos, setCurrentContainer, task, setTask }
         setEndTime(endTime);
     }, [task]);
 
-    const [showNotification, setShowNotification] = useState(true);
-
     const splitTime = (duration: string) => {
         const [startTime, endTime] = duration.split(' - ');
         return { startTime, endTime };
     }
 
     const handleSaveEdit = () => {
+        if (!title && !date && !startTime && !endTime) {
+            return;
+        }
         const updatedTodos = todos.map((todo: any) => {
             if (todo.id === task.id) {
                 return {
@@ -54,6 +57,7 @@ export const EditTask = ({ todos, setTodos, setCurrentContainer, task, setTask }
         const updatedTask = updatedTodos.find((todo: any) => todo.id === task.id);
         setTask(updatedTask);
         setTodos(updatedTodos);
+        alert('Task updated successfully');
         setCurrentContainer('view-task');
     };
 

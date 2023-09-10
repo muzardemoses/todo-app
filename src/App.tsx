@@ -1,8 +1,10 @@
-import { SetStateAction, useState } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { SetStateAction, useEffect, useState } from 'react'
+import moment from 'moment';
 import { Haeder, SectionOne, SectionTwo } from './Components'
 
 function App() {
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState<any>([]);
 
   const [task, setTask] = useState({ todos: [] });
 
@@ -25,7 +27,27 @@ function App() {
   const endIndex = startIndex + todosPerPage;
 
   // Get the todos for the current page
-  const currentTodos = todos.slice(startIndex, endIndex);
+  const [currentTodos, setCurrentTodos] = useState([]);
+  //const currentTodos = todos.slice(startIndex, endIndex);
+
+  
+  useEffect(() => {
+    // Sort todos by date and time
+    const sortedTodos = todos.sort((a: { date: string; duration: string; }, b: { date: any; duration: string; }) => {
+      const dateComparison = a.date.localeCompare(b.date);
+      if (dateComparison !== 0) {
+        return dateComparison;
+      }
+      // Compare times if dates are equal
+      const timeA = moment(a.duration.split(' - ')[0], 'h:mm A');
+      const timeB = moment(b.duration.split(' - ')[0], 'h:mm A');
+      return timeA.diff(timeB);
+    });
+
+    // Set currentTodos with the sorted array
+    setCurrentTodos(sortedTodos.slice(startIndex, endIndex));
+  }, [todos, startIndex, endIndex]);
+
 
   return (
     <div className='min-h-screen pb-24 flex flex-col gap-12'>

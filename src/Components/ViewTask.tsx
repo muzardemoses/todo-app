@@ -22,16 +22,18 @@ export const ViewTask = ({ todos, setTodos, setCurrentContainer, task }: { todos
     }
 
     const handleDelete = (id: any) => {
-        const updatedTodos = todos.filter((todo: { id: any; }) => todo.id !== id);
-        setTodos(updatedTodos);
-        setCurrentContainer('calendar');
+        if (window.confirm('Are you sure you want to delete this task?')) {
+            const updatedTodos = todos.filter((todo: { id: any; }) => todo.id !== id);
+            setTodos(updatedTodos);
+            setCurrentContainer('calendar');
+        }    
     };
 
     return (
         <div className="w-full py-5 px-6 flex flex-col gap-4 border border-gray-100 rounded-lg shadow-xl">
             <button
                 className="w-6 h-6 self-end"
-                onClick={() => setCurrentContainer('calender')}><img src={closeSVG} alt="close" />
+                onClick={() => setCurrentContainer('calendar')}><img src={closeSVG} alt="close" />
             </button>
             <div className='flex flex-col gap-[34px]'>
                 <div className='flex flex-col gap-8'>
