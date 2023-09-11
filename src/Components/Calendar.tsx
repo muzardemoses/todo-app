@@ -48,7 +48,7 @@ export const Calendar = ({ todos }: { todos: any }) => {
         grid[firstDayIndex + dayIndex] = (
             <button
                 key={date.format('YYYY-MM-DD')}
-                className={`relative h-10 w-10 py-2.5 rounded-full flex justify-center items-center text-gray-700 font-medium text-sm  transition duration-500 ease-in-out ${(date.isSame(currentDate, 'day') && date.isSame(moment(), 'month')) ? 'bg-[#3F5BF6] text-[#ffff] hover:bg-blue-400' : 'hover:bg-gray-100 hover:text-black'
+                className={`relative h-10 w-10 py-2.5 rounded-full flex justify-center items-center  font-medium text-sm  transition duration-500 ease-in-out ${(date.isSame(currentDate, 'day') && date.isSame(moment(), 'month')) ? 'bg-[#3F5BF6] text-[#ffff] hover:bg-blue-400' : 'hover:bg-gray-100 text-gray-700 hover:text-black'
                     } 
                     ${date.isSame(selectedDate, 'day') ? 'border-2 border-[#3F5BF6]' : ''
                     }`}

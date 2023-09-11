@@ -13,6 +13,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [todosPerPage] = useState(6); // Number of todos to display per page
 
+  const [loading, setLoading] = useState(false);
 
   // Calculate the total number of pages based on the number of todos per page
   const totalPages = Math.ceil(todos.length / todosPerPage);
@@ -54,7 +55,7 @@ function App() {
       <Haeder />
       <main className='px-16 flex flex-col gap-8 sm:px-4'>
         <SectionOne setCurrentContainer={setCurrentContainer} />
-        <SectionTwo todos={todos} setTodos={setTodos} currentTodos={currentTodos} totalPages={totalPages} handlePageChange={handlePageChange} currentPage={currentPage} currentContainer={currentContainer} setCurrentContainer={setCurrentContainer} task={task} setTask={setTask} />
+        <SectionTwo todos={todos} setTodos={setTodos} currentTodos={currentTodos} totalPages={totalPages} handlePageChange={handlePageChange} currentPage={currentPage} currentContainer={currentContainer} setCurrentContainer={setCurrentContainer} task={task} setTask={setTask} loading={loading} setLoading={setLoading} />
       </main>
     </div>
   )

@@ -37,7 +37,7 @@ export const TaskHeader = () => {
                 {datesToShow.map((day) => (
                     <div
                         key={day}
-                        className={`flex-1 border border-gray-700 rounded-lg px-4 py-2.5 flex flex-col gap-2 items-center text-gray-700 text-sm font-semibold sm:px-3 sm:py-2 sm:text-xs ${day === currentDay ? 'bg-[#3F5BF6] text-[#ffff] border-[#3F5BF6]' : ''
+                        className={`flex-1 border  rounded-lg px-4 py-2.5 flex flex-col gap-2 items-center  text-sm font-semibold sm:px-3 sm:py-2 sm:text-xs ${day === currentDay ? 'bg-[#3F5BF6] text-white border-[#3F5BF6]' : 'text-gray-700 border-gray-700'
                             }`}
                     >
                         <p>{daysOfWeek[new Date(currentDate.getFullYear(), currentMonth, day).getDay()]}</p>

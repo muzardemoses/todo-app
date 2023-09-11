@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TaskFooter, TaskHeader } from "."
+import { TaskFooter, TaskHeader, LoadingFunc } from "."
 import { useEffect } from "react"
 import axios from 'axios';
 import moment from 'moment';
@@ -7,9 +7,10 @@ import { handleFormatToDate } from "../Hooks";
 import checkSVG from "../assets/check.svg"
 
 
-export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handlePageChange, currentPage, currentContainer, setCurrentContainer, task, setTask }: { todos: any, setTodos: any, currentTodos: any, totalPages: any, handlePageChange: any, currentPage: any, currentContainer: any, setCurrentContainer: any, task: any, setTask: any }) => {
+export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handlePageChange, currentPage, currentContainer, setCurrentContainer, task, setTask, loading, setLoading }: { todos: any, setTodos: any, currentTodos: any, totalPages: any, handlePageChange: any, currentPage: any, currentContainer: any, setCurrentContainer: any, task: any, setTask: any, loading: any, setLoading: any }) => {
 
     useEffect(() => {
+        setLoading(true);
         // Fetch todos from the JSONPlaceholder API
         axios.get('https://jsonplaceholder.typicode.com/todos')
             .then((response) => {
@@ -51,11 +52,13 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
                 }));
 
                 setTodos(capitalizedTitles);
+                setLoading(false);
             })
             .catch((error) => {
                 console.error('Error fetching todos:', error);
+                setLoading(false);
             });
-    }, [setTodos]);
+    }, [setTodos, setLoading]);
 
 
 
@@ -124,64 +127,68 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
             <main className="flex flex-col gap-4">
                 <h4 className="text-gray-900 font-semibold text-base">
                     My Tasks
-                </h4>
-                <ul className="flex flex-col gap-4">
-                    {currentTodos.map((todo: any) => (
-                        <li
-                            key={todo.id}
-                            className={`bg-gray-50 w-full h-[72px] py-4 px-6 flex justify-between items-center border-b border-gray-200 hover:bg-gray-100 hover:cursor-pointer transition duration-500 ease-in-out sm:px-3 ${task && (task.id === todo.id) && (currentContainer === 'view-task' || currentContainer === 'edit-task')
-                                ? 'bg-[#EAEDFE]'
-                                : ''}
+                </h4> {loading ?
+                    <p className="mt-0 flex justify-center items-center">
+                        <LoadingFunc />
+                    </p> :
+                    <ul className="flex flex-col gap-4">
+                        {currentTodos.map((todo: any) => (
+                            <li
+                                key={todo.id}
+                                className={`bg-gray-50 w-full h-[72px] py-4 px-6 flex justify-between items-center border-b border-gray-200 hover:bg-gray-100 hover:cursor-pointer transition duration-500 ease-in-out sm:px-3 ${task && (task.id === todo.id) && (currentContainer === 'view-task' || currentContainer === 'edit-task')
+                                    ? 'bg-[#EAEDFE]'
+                                    : ''}
                           `}
-                            onClick={() => {
-                                setTask(todo);
-                                setCurrentContainer('view-task');
-                            }}
-                        >
-                            <div className="flex items-center gap-3"
-                                onClick={(e) => e.stopPropagation()}
+                                onClick={() => {
+                                    setTask(todo);
+                                    setCurrentContainer('view-task');
+                                }}
                             >
-                                <button
-                                    className={`h-5 w-5 flex justify-center items-center border border-gray-300 bg-white rounded-md hover:border-gray-400 hover:bg-gray-100 ${todo.completed ? "border-[#3F5BF6]" : ""}`}
-                                    onClick={() => {
-                                        if (todo.completed) {
-                                            markTodoIncomplete(todo.id);
-                                        } else {
-                                            markTodoComplete(todo.id);
-                                        }
-                                    }}
+                                <div className="flex items-center gap-3"
+                                    onClick={(e) => e.stopPropagation()}
                                 >
-                                    {todo.completed && (
-                                        <img
-                                            src={checkSVG}
-                                            alt="check"
-                                            className="w-3 h-3"
-                                        />
-                                    )}
-                                </button>
-                                <div
-                                    className="flex flex-col gap-1"
-                                    onClick={() => {
-                                        setTask(todo);
-                                        setCurrentContainer('view-task');
-                                    }}
-                                >
-                                    <h5 className={`text-gray-900 text-sm font-semibold transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] font-medium line-through" : ""
-                                        } ${window.innerWidth < 640 ? 'truncate' : ''}`}>
-                                        {window.innerWidth < 640 && todo.title.length > 30 ? todo.title.slice(0, 27) + "..." : todo.title}
-                                    </h5>
+                                    <button
+                                        className={`h-5 w-5 flex justify-center items-center border border-gray-300 bg-white rounded-md hover:border-gray-400 hover:bg-gray-100 ${todo.completed ? "border-[#3F5BF6]" : ""}`}
+                                        onClick={() => {
+                                            if (todo.completed) {
+                                                markTodoIncomplete(todo.id);
+                                            } else {
+                                                markTodoComplete(todo.id);
+                                            }
+                                        }}
+                                    >
+                                        {todo.completed && (
+                                            <img
+                                                src={checkSVG}
+                                                alt="check"
+                                                className="w-3 h-3"
+                                            />
+                                        )}
+                                    </button>
+                                    <div
+                                        className="flex flex-col gap-1"
+                                        onClick={() => {
+                                            setTask(todo);
+                                            setCurrentContainer('view-task');
+                                        }}
+                                    >
+                                        <h5 className={`text-gray-900 text-sm font-semibold transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] font-medium line-through" : ""
+                                            } ${window.innerWidth < 640 ? 'truncate' : ''}`}>
+                                            {window.innerWidth < 640 && todo.title.length > 30 ? todo.title.slice(0, 27) + "..." : todo.title}
+                                        </h5>
 
-                                    <p className={`text-gray-600 text-sm font-normal transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] line-through" : ""}`}>
-                                        {todo.duration}
-                                    </p>
+                                        <p className={`text-gray-600 text-sm font-normal transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] line-through" : ""}`}>
+                                            {todo.duration}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <p className="text-gray-600 font-normal text-sm sm:text-xs">
-                                {handleFormatToDate(todo.date)}
-                            </p>
-                        </li>
-                    ))}
-                </ul>
+                                <p className="text-gray-600 font-normal text-sm sm:text-xs">
+                                    {handleFormatToDate(todo.date)}
+                                </p>
+                            </li>
+                        ))}
+                    </ul>
+                }
             </main>
             <TaskFooter totalPages={totalPages} handlePageChange={handlePageChange} currentPage={currentPage} />
         </div>
