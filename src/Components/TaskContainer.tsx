@@ -84,8 +84,17 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
         return durationString;
     };
 
-    // Function to set todo.completed to true
-    const markTodoComplete = (todoId: any) => {
+    // // Function to set todo.completed to true
+    // const markTodoComplete = (todoId: any) => {
+    //     const updatedTodos = todos.map((todo: { id: any; }) => {
+    //         if (todo.id === todoId) {
+    //             return { ...todo, completed: true };
+    //         }
+    //         return todo;
+    //     });
+    //     setTodos(updatedTodos);
+    // };
+    const markTodoComplete: (todoId: any) => void = (todoId: any) => {
         const updatedTodos = todos.map((todo: { id: any; }) => {
             if (todo.id === todoId) {
                 return { ...todo, completed: true };
@@ -94,6 +103,7 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
         });
         setTodos(updatedTodos);
     };
+
 
     // Function to set todo.completed to false
     const markTodoIncomplete = (todoId: any) => {
@@ -128,9 +138,9 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
                 <h4 className="text-gray-900 font-semibold text-base">
                     My Tasks
                 </h4> {loading ?
-                    <p className="mt-0 flex justify-center items-center">
+                    <div className="mt-0 flex justify-center items-center">
                         <LoadingFunc />
-                    </p> :
+                    </div> :
                     <ul className="flex flex-col gap-4">
                         {currentTodos.map((todo: any) => (
                             <li
