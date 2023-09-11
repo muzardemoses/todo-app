@@ -20,7 +20,7 @@ export const TaskFooter = ({ totalPages, handlePageChange, currentPage }: { tota
                     <button
                         key={i}
                         onClick={() => handlePageChange(i)}
-                        className={`h-10 w-10 rounded-full flex justify-center items-center font-medium hover:bg-gray-50 transition duration-500 ease-in-out ${currentPage === i ? 'bg-gray-50 text-gray-800' : 'text-gray-600'}`}
+                        className={`h-10 w-10 rounded-full flex justify-center items-center font-medium hover:bg-gray-50 transition duration-500 ease-in-out sm:h-8 sm:w-8 ${currentPage === i ? 'bg-gray-50 text-gray-800' : 'text-gray-600'}`}
                     >
                         {i}
                     </button>
@@ -36,7 +36,7 @@ export const TaskFooter = ({ totalPages, handlePageChange, currentPage }: { tota
                     <button
                         key={i}
                         onClick={() => handlePageChange(i)}
-                        className={`h-10 w-10 rounded-full flex justify-center items-center font-medium hover:bg-gray-50 transition duration-500 ease-in-out ${currentPage === i ? 'bg-gray-50 text-gray-800' : 'text-gray-600'}`}
+                        className={`h-10 w-10 rounded-full flex justify-center items-center font-medium hover:bg-gray-50 transition duration-500 ease-in-out sm:h-8 sm:w-8 ${currentPage === i ? 'bg-gray-50 text-gray-800' : 'text-gray-600'}`}
                     >
                         {i}
                     </button>
@@ -45,7 +45,7 @@ export const TaskFooter = ({ totalPages, handlePageChange, currentPage }: { tota
 
             if (firstButton > 1) {
                 buttons.unshift(
-                    <button key="ellipsis-start" disabled className="h-10 w-10 flex justify-center items-center">
+                    <button key="ellipsis-start" disabled className="h-10 w-10 flex justify-center items-center sm:h-8 sm:w-8">
                         ...
                     </button>
                 );
@@ -53,7 +53,7 @@ export const TaskFooter = ({ totalPages, handlePageChange, currentPage }: { tota
 
             if (lastButton < totalPages) {
                 buttons.push(
-                    <button key="ellipsis-end" disabled className="h-10 w-10 flex justify-center items-center">
+                    <button key="ellipsis-end" disabled className="h-10 w-10 flex justify-center items-center sm:h-8 sm:w-8">
                         ...
                     </button>
                 );
@@ -65,12 +65,12 @@ export const TaskFooter = ({ totalPages, handlePageChange, currentPage }: { tota
 
 
     return (
-        <div className="pt-5 flex justify-between items-center border-t border-gray-200">
+        <div className="pt-5 flex justify-between items-center border-t border-gray-200 sm:pt-3">
             <button className={`h-10 flex gap-2 items-center ${currentPage === 1 ? "opacity-50" : ""}`}
                 disabled={currentPage === 1}
                 onClick={() => handlePageChange(currentPage - 1)}
             >
-                <img src={ArrowLeftSVG} alt="arrow-left" className="w-5 h-5" />
+                <img src={ArrowLeftSVG} alt="arrow-left" className="w-5 h-5 sm:w-4 sm:h-4" />
                 <p className="text-gray-600 font-semibold text-sm">
                     Previous
                 </p>
@@ -85,7 +85,7 @@ export const TaskFooter = ({ totalPages, handlePageChange, currentPage }: { tota
                 <p className="text-gray-600 font-semibold text-sm">
                     Next
                 </p>
-                <img src={ArrowRightSVG} alt="arrow-right" className="w-5 h-5" />
+                <img src={ArrowRightSVG} alt="arrow-right" className="w-5 h-5 sm:w-4 sm:h-4" />
             </button>
         </div>
     )

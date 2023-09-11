@@ -70,7 +70,7 @@ export const Calendar = ({ todos }: { todos: any }) => {
     }
 
     return (
-        <div className="w-full py-5 px-6 flex flex-col gap-3 border border-gray-100 rounded-lg shadow-xl">
+        <div className="w-full py-5 px-6 flex flex-col gap-3 border border-gray-100 rounded-lg shadow-xl sm:hidden sm:h-max sm:bg-white sm:rounded-none sm:rounded-t-3xl">
             <div className="flex justify-between items-center">
                 <button onClick={handlePreviousMonth}>
                     <img src={chevronLeftSVG} alt="chevron-left" className="w-5 h-5" />

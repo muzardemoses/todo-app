@@ -62,7 +62,7 @@ export const EditTask = ({ todos, setTodos, setCurrentContainer, task, setTask }
     };
 
     return (
-        <div className="w-full p-6 flex flex-col gap-8 border border-gray-100 rounded-lg shadow-xl">
+        <div className="w-full p-6 flex flex-col gap-8 border border-gray-100 rounded-lg shadow-xl sm:h-max sm:bg-white sm:rounded-none sm:rounded-t-3xl">
             <div className='flex flex-col gap-4'>
                 <div className='flex justify-between items-center'>
                     <h5 className="text-gray-900 font-semibold text-lg">
@@ -95,7 +95,7 @@ export const EditTask = ({ todos, setTodos, setCurrentContainer, task, setTask }
                             </p>
                         </button>
                         {showDatePicker && (
-                            <div className="w-max h-max top-14 right-0 absolute bg-white border border-gray-100 rounded-lg shadow-xl"
+                            <div className="w-max h-max top-14 right-0 absolute bg-white border border-gray-100 rounded-lg shadow-xl sm:-top-[500px]"
                             >
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer
@@ -143,7 +143,7 @@ export const EditTask = ({ todos, setTodos, setCurrentContainer, task, setTask }
                                 </p>
                             </button>
                             {showStartTimePicker && (
-                                <div className="w-max h-max top-14 right-0 absolute bg-white border border-gray-100 rounded-lg shadow-xl"
+                                <div className="w-max h-max top-14 right-0 absolute bg-white border border-gray-100 rounded-lg shadow-xl sm:-top-[500px]"
                                 >
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         <DemoContainer
@@ -190,7 +190,7 @@ export const EditTask = ({ todos, setTodos, setCurrentContainer, task, setTask }
                                 </p>
                             </button>
                             {showEndTimePicker && (
-                                <div className="w-max h-max top-14 right-0 absolute bg-white border border-gray-100 rounded-lg shadow-xl"
+                                <div className="w-max h-max top-14 right-0 absolute bg-white border border-gray-100 rounded-lg shadow-xl sm:-top-[500px]"
                                 >
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         <DemoContainer

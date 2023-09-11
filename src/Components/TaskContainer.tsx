@@ -103,6 +103,20 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
         setTodos(updatedTodos);
     };
 
+    //const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            //setWindowWidth(window.innerWidth);
+            window.innerWidth
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     return (
         <div className="w-full flex flex-col gap-8">
@@ -115,7 +129,7 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
                     {currentTodos.map((todo: any) => (
                         <li
                             key={todo.id}
-                            className={`bg-gray-50 w-full h-[72px] py-4 px-6 flex justify-between items-center border-b border-gray-200 hover:bg-gray-100 hover:cursor-pointer transition duration-500 ease-in-out ${task && (task.id === todo.id) && (currentContainer === 'view-task' || currentContainer === 'edit-task')
+                            className={`bg-gray-50 w-full h-[72px] py-4 px-6 flex justify-between items-center border-b border-gray-200 hover:bg-gray-100 hover:cursor-pointer transition duration-500 ease-in-out sm:px-3 ${task && (task.id === todo.id) && (currentContainer === 'view-task' || currentContainer === 'edit-task')
                                 ? 'bg-[#EAEDFE]'
                                 : ''}
                           `}
@@ -152,15 +166,17 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
                                         setCurrentContainer('view-task');
                                     }}
                                 >
-                                    <h5 className={`text-gray-900 text-sm font-semibold transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] font-medium line-through" : ""}`}>
-                                        {todo.title}
+                                    <h5 className={`text-gray-900 text-sm font-semibold transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] font-medium line-through" : ""
+                                        } ${window.innerWidth < 640 ? 'truncate' : ''}`}>
+                                        {window.innerWidth < 640 && todo.title.length > 30 ? todo.title.slice(0, 27) + "..." : todo.title}
                                     </h5>
+
                                     <p className={`text-gray-600 text-sm font-normal transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] line-through" : ""}`}>
                                         {todo.duration}
                                     </p>
                                 </div>
                             </div>
-                            <p className="text-gray-600 font-normal text-sm">
+                            <p className="text-gray-600 font-normal text-sm sm:text-xs">
                                 {handleFormatToDate(todo.date)}
                             </p>
                         </li>

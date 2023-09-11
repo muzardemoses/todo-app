@@ -30,7 +30,7 @@ export const ViewTask = ({ todos, setTodos, setCurrentContainer, task }: { todos
     };
 
     return (
-        <div className="w-full py-5 px-6 flex flex-col gap-4 border border-gray-100 rounded-lg shadow-xl">
+        <div className="w-full py-5 px-6 flex flex-col gap-4 border border-gray-100 rounded-lg shadow-xl sm:bg-white sm:rounded-none sm:rounded-t-3xl">
             <button
                 className="w-6 h-6 self-end"
                 onClick={() => setCurrentContainer('calendar')}><img src={closeSVG} alt="close" />
@@ -55,15 +55,15 @@ export const ViewTask = ({ todos, setTodos, setCurrentContainer, task }: { todos
                         </div>
                     </div>
                 </div>
-                <div className='flex gap-3'>
+                <div className='flex gap-3 justify-between'>
                     <button
-                        className='w-[164px] py-2.5 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 transition duration-500 ease-in-out'
+                        className='w-5/12 py-2.5 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 transition duration-500 ease-in-out'
                         onClick={() => handleDelete(task.id)}
                     >
                         Delete
                     </button>
                     <button
-                        className='w-[164px] py-2.5 bg-[#3F5BF6] border border-[#3F5BF6] rounded-lg shadow-sm text-white hover:bg-blue-700 hover:border-blue-700 transition duration-500 ease-in-out'
+                        className='w-5/12 py-2.5 bg-[#3F5BF6] border border-[#3F5BF6] rounded-lg shadow-sm text-white hover:bg-blue-700 hover:border-blue-700 transition duration-500 ease-in-out'
                         onClick={() => setCurrentContainer('edit-task')}
                     >
                         Edit

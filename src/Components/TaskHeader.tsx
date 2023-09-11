@@ -29,15 +29,15 @@ export const TaskHeader = () => {
     datesToShow.sort((a, b) => a - b);
 
     return (
-        <div className="w-full flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-4 sm:gap-3">
             <h4 className="text-gray-900 font-semibold text-base">
                 {currentMonthText} {currentYear}
             </h4>
-            <div className="w-full flex gap-4">
+            <div className="w-full flex gap-4 sm:gap-3 sm:overflow-x-scroll sm:overflow-y-hidden">
                 {datesToShow.map((day) => (
                     <div
                         key={day}
-                        className={`flex-1 border border-gray-700 rounded-lg px-4 py-2.5 flex flex-col gap-2 items-center text-gray-700 text-sm font-semibold ${day === currentDay ? 'bg-[#3F5BF6] text-[#ffff] border-[#3F5BF6]' : ''
+                        className={`flex-1 border border-gray-700 rounded-lg px-4 py-2.5 flex flex-col gap-2 items-center text-gray-700 text-sm font-semibold sm:px-3 sm:py-2 sm:text-xs ${day === currentDay ? 'bg-[#3F5BF6] text-[#ffff] border-[#3F5BF6]' : ''
                             }`}
                     >
                         <p>{daysOfWeek[new Date(currentDate.getFullYear(), currentMonth, day).getDay()]}</p>

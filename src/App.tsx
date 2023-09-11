@@ -50,9 +50,9 @@ function App() {
 
 
   return (
-    <div className='min-h-screen pb-24 flex flex-col gap-12'>
+    <div className='min-h-screen pb-24 flex flex-col gap-12 sm:pb-[100px] sm:gap-8'>
       <Haeder />
-      <main className='px-16 flex flex-col gap-8'>
+      <main className='px-16 flex flex-col gap-8 sm:px-4'>
         <SectionOne setCurrentContainer={setCurrentContainer} />
         <SectionTwo todos={todos} setTodos={setTodos} currentTodos={currentTodos} totalPages={totalPages} handlePageChange={handlePageChange} currentPage={currentPage} currentContainer={currentContainer} setCurrentContainer={setCurrentContainer} task={task} setTask={setTask} />
       </main>
