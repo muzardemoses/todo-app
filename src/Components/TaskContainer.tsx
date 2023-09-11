@@ -135,9 +135,9 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
                         {currentTodos.map((todo: any) => (
                             <li
                                 key={todo.id}
-                                className={`bg-gray-50 w-full h-[72px] py-4 px-6 flex justify-between items-center border-b border-gray-200 hover:bg-gray-100 hover:cursor-pointer transition duration-500 ease-in-out sm:px-3 ${task && (task.id === todo.id) && (currentContainer === 'view-task' || currentContainer === 'edit-task')
+                                className={` w-full h-[72px] py-4 px-6 flex justify-between items-center border-b border-gray-200 hover:bg-gray-100 hover:cursor-pointer transition duration-500 ease-in-out sm:px-3 ${task && (task.id === todo.id) && (currentContainer === 'view-task' || currentContainer === 'edit-task')
                                     ? 'bg-[#EAEDFE]'
-                                    : ''}
+                                    : 'bg-gray-50'}
                           `}
                                 onClick={() => {
                                     setTask(todo);
@@ -148,7 +148,7 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
                                     onClick={(e) => e.stopPropagation()}
                                 >
                                     <button
-                                        className={`h-5 w-5 flex justify-center items-center border border-gray-300 bg-white rounded-md hover:border-gray-400 hover:bg-gray-100 ${todo.completed ? "border-[#3F5BF6]" : ""}`}
+                                        className={`h-5 w-5 flex justify-center items-center border bg-white rounded-md hover:border-gray-400 hover:bg-gray-100 ${todo.completed ? "border-[#3F5BF6]" : "border-gray-300"}`}
                                         onClick={() => {
                                             if (todo.completed) {
                                                 markTodoIncomplete(todo.id);
@@ -172,12 +172,12 @@ export const TaskContainer = ({ todos, setTodos, currentTodos, totalPages, handl
                                             setCurrentContainer('view-task');
                                         }}
                                     >
-                                        <h5 className={`text-gray-900 text-sm font-semibold transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] font-medium line-through" : ""
+                                        <h5 className={` text-sm font-semibold transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] font-medium line-through" : "text-gray-900"
                                             } ${window.innerWidth < 640 ? 'truncate' : ''}`}>
                                             {window.innerWidth < 640 && todo.title.length > 30 ? todo.title.slice(0, 27) + "..." : todo.title}
                                         </h5>
 
-                                        <p className={`text-gray-600 text-sm font-normal transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] line-through" : ""}`}>
+                                        <p className={` text-sm font-normal transition duration-500 ease-in-out ${todo.completed ? "text-[#D0D5DD] line-through" : "text-gray-600"}`}>
                                             {todo.duration}
                                         </p>
                                     </div>
